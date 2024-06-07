@@ -32,9 +32,9 @@ Status SimdJsonStreamParser::parse(char* data, size_t len, size_t allocated) noe
 }
 
 Status SimdJsonStreamParser::current_document(
-        simdjson::ondemand::document_reference original_json_doc) noexcept {
+        simdjson::ondemand::document_reference* original_json_doc) noexcept {
     if (_json_stream_iterator != _json_stream.end()) {
-        original_json_doc = (*_json_stream_iterator).value();
+        *original_json_doc = (*_json_stream_iterator).value();
         return Status::OK();
     }
     return Status::EndOfFile("read json document end");
@@ -60,8 +60,8 @@ Status SimdJsonParser::parse(char* data, size_t len, size_t allocated) noexcept 
 }
 
 Status SimdJsonParser::current_document(
-        simdjson::ondemand::document_reference original_json_doc) noexcept {
-    original_json_doc = simdjson::ondemand::document_reference(_doc);
+        simdjson::ondemand::document_reference* original_json_doc) noexcept {
+    *original_json_doc = simdjson::ondemand::document_reference(_doc);
     return Status::OK();
 }
 

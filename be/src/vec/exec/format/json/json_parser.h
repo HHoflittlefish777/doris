@@ -31,7 +31,7 @@ public:
     virtual ~JsonParser() = default;
     virtual Status parse(char* data, size_t len, size_t allocated) noexcept = 0;
     virtual Status current_document(
-            simdjson::ondemand::document_reference original_json_doc) noexcept = 0;
+            simdjson::ondemand::document_reference* original_json_doc) noexcept = 0;
     virtual Status next() noexcept = 0;
 
 protected:
@@ -43,7 +43,7 @@ public:
     SimdJsonStreamParser(simdjson::ondemand::parser* parser) : JsonParser(parser) {};
     Status parse(char* data, size_t len, size_t allocated) noexcept override;
     Status current_document(
-            simdjson::ondemand::document_reference original_json_doc) noexcept override;
+            simdjson::ondemand::document_reference* original_json_doc) noexcept override;
     Status next() noexcept override;
 
 private:
@@ -56,7 +56,7 @@ public:
     SimdJsonParser(simdjson::ondemand::parser* parser) : JsonParser(parser) {};
     Status parse(char* data, size_t len, size_t allocated) noexcept override;
     Status current_document(
-            simdjson::ondemand::document_reference original_json_doc) noexcept override;
+            simdjson::ondemand::document_reference* original_json_doc) noexcept override;
     Status next() noexcept override;
 
 private:
