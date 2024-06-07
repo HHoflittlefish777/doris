@@ -38,6 +38,7 @@
 #include "exprs/json_functions.h"
 #include "io/file_factory.h"
 #include "io/fs/file_reader_writer_fwd.h"
+#include "json_parser.h"
 #include "util/runtime_profile.h"
 #include "vec/common/hash_table/hash_map.h"
 #include "vec/common/string_ref.h"
@@ -277,13 +278,12 @@ private:
     // char _simdjson_ondemand_padding_buffer[_padded_size];
     simdjson::ondemand::document_reference _original_json_doc;
     simdjson::ondemand::value _json_value;
-    simdjson::ondemand::document_stream _json_stream;
-    simdjson::ondemand::document_stream::iterator _json_stream_iterator;
+    std::unique_ptr<JsonParser> _parser;
+    simdjson::ondemand::parser _ondemand_json_parser;
     // for strip outer array
     // array_iter pointed to _array
     simdjson::ondemand::array_iterator _array_iter;
     simdjson::ondemand::array _array;
-    std::unique_ptr<simdjson::ondemand::parser> _ondemand_json_parser;
     // column to default value string map
     std::unordered_map<std::string, std::string> _col_default_value_map;
 };
